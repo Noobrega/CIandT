@@ -1,1 +1,1 @@
-// Import shared Cypress commands here as they are implemented.
+// Register shared hooks and custom commands here when needed.

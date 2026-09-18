@@ -1,0 +1,8 @@
+{
+  "validUser": {
+    "nome": "QA Automation User",
+    "email": "qa.automation@example.com",
+    "password": "TestPassword123!",
+    "administrador": "false"
+  }
+}

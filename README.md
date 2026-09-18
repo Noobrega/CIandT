@@ -32,7 +32,7 @@ npm run test:frontend
 npm run test:api
 ```
 
-Test scenarios have not been added yet. Until `.cy.js` files are created in `cypress/e2e/frontend` or `cypress/e2e/api`, headless runs will exit with a "no spec files were found" error.
+The API suite currently includes a successful login test. It creates a user with a unique email, verifies the login response and authorization token, and deletes the user after the test. Frontend scenarios have not been added yet, so `npm run test:frontend` will report that no spec files were found.
 
 ## Configuration
 
