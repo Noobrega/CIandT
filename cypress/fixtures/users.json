@@ -1,4 +1,5 @@
 {
+  "invalidPassword": "IncorrectPassword123!",
   "validUser": {
     "nome": "QA Automation User",
     "email": "qa.automation@example.com",
