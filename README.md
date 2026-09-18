@@ -32,7 +32,7 @@ npm run test:frontend
 npm run test:api
 ```
 
-The API suite covers successful login, rejection of an incorrect password, and validation of a missing password. The frontend suite covers successful administrator login and rejection of an incorrect password through the UI. Each test creates its own user with a unique email and deletes that user afterward.
+The API suite covers successful login, rejection of an incorrect password, and validation of a missing password. The frontend suite covers successful administrator login, rejection of an incorrect password, and an end-to-end flow that registers a regular user, selects a product, reaches the cart placeholder, and logs out. Each test creates its own user with a unique email and deletes that user afterward.
 
 ## Configuration
 
@@ -53,7 +53,7 @@ Before each headless run, the `before:run` hook removes the previous `reports/` 
 
 The `Daily Cypress Tests` workflow runs the full suite in Chrome automatically every day at **06:00 America/Sao_Paulo (09:00 UTC)**. It has no manual trigger.
 
-For manual execution, open **Actions > Manual Cypress Tests > Run workflow** in GitHub and choose `all`, `@api`, `@ui`, `@auth`, `@positive`, or `@negative`. This separate workflow has no schedule. Both workflows use the artifact retention settings below.
+For manual execution, open **Actions > Manual Cypress Tests > Run workflow** in GitHub and choose `all`, `@api`, `@ui`, `@auth`, `@registration`, `@cart`, `@e2e`, `@positive`, or `@negative`. This separate workflow has no schedule. Both workflows use the artifact retention settings below.
 
 Filter a local run by tag with `@cypress/grep`:
 

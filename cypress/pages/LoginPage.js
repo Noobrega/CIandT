@@ -7,6 +7,10 @@ class LoginPage {
     return cy.visit('/login');
   }
 
+  goToRegistration() {
+    return cy.get('[data-testid="cadastrar"]').click();
+  }
+
   login({ email, password }) {
     cy.get('[data-testid="email"]').should('be.visible').clear().type(email);
     cy.get('[data-testid="senha"]').clear().type(password, { log: false });

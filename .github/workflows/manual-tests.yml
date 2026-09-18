@@ -13,6 +13,9 @@ on:
           - '@api'
           - '@ui'
           - '@auth'
+          - '@registration'
+          - '@cart'
+          - '@e2e'
           - '@positive'
           - '@negative'
 
