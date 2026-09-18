@@ -1,4 +1,4 @@
-# ServeRest Test Automation
+# Test Automation
 
 ## Requirements
 
