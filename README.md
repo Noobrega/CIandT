@@ -32,7 +32,7 @@ npm run test:frontend
 npm run test:api
 ```
 
-The API suite covers successful login, rejection of an incorrect password, and validation of a missing password. Each test creates its own user with a unique email and deletes that user afterward. The frontend suite covers administrator login through the UI, using an independent user created and removed through the API.
+The API suite covers successful login, rejection of an incorrect password, and validation of a missing password. The frontend suite covers successful administrator login and rejection of an incorrect password through the UI. Each test creates its own user with a unique email and deletes that user afterward.
 
 ## Configuration
 

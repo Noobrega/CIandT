@@ -1,4 +1,8 @@
 class LoginPage {
+  get errorAlert() {
+    return cy.get('[role="alert"]');
+  }
+
   visit() {
     return cy.visit('/login');
   }

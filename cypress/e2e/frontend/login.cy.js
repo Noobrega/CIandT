@@ -2,6 +2,7 @@ import loginPage from '../../pages/LoginPage';
 import adminHomePage from '../../pages/AdminHomePage';
 import usersService from '../../services/UsersService';
 import { buildUserPayload } from '../../fixtures/factories/userFactory';
+import users from '../../fixtures/users.json';
 
 describe('UI - Authentication', () => {
   let user;
@@ -35,5 +36,21 @@ describe('UI - Authentication', () => {
     cy.location('pathname').should('eq', '/admin/home');
     adminHomePage.welcomeHeading.should('be.visible').and('contain.text', `Bem Vindo  ${user.nome}`);
     adminHomePage.logoutButton.should('be.visible').and('be.enabled');
+  });
+
+  it('should display an error and remain on the login page with an incorrect password', { tags: ['@ui', '@auth', '@negative'] }, () => {
+    expect(users.invalidPassword, 'password differs from the registered password')
+      .not.to.eq(user.password);
+
+    loginPage.visit();
+    loginPage.login({
+      email: user.email,
+      password: users.invalidPassword,
+    });
+
+    cy.location('pathname').should('eq', '/login');
+    loginPage.errorAlert
+      .should('be.visible')
+      .and('contain.text', 'Email e/ou senha inválidos');
   });
 });
