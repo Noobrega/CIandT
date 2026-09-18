@@ -1,18 +1,22 @@
 const { defineConfig } = require('cypress');
+const { beforeRunHook, afterRunHook } = require('cypress-mochawesome-reporter/lib');
 const fs = require('node:fs');
 const path = require('node:path');
 
 module.exports = defineConfig({
   viewportWidth: 1280,
   viewportHeight: 720,
-  reporter: 'mochawesome',
+  reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     reportDir: 'reports',
-    reportFilename: '[name]-report',
-    overwrite: true,
-    html: true,
-    json: true,
+    reportFilename: 'test-report',
+    reportPageTitle: 'Test Report',
+    charts: true,
     inlineAssets: true,
+    embeddedScreenshots: false,
+    ignoreVideos: true,
+    saveJson: true,
+    saveAllAttempts: false,
   },
   video: true,
   screenshotOnRunFailure: true,
@@ -26,7 +30,7 @@ module.exports = defineConfig({
     supportFile: 'cypress/support/e2e.js',
     testIsolation: true,
     setupNodeEvents(on, config) {
-      on('before:run', () => {
+      on('before:run', async (details) => {
         const reportsPath = path.resolve(config.projectRoot, 'reports');
         const relativePath = path.relative(config.projectRoot, reportsPath);
 
@@ -36,6 +40,11 @@ module.exports = defineConfig({
 
         // Clean once per run to preserve reports from all specs in the suite.
         fs.rmSync(reportsPath, { recursive: true, force: true });
+        await beforeRunHook(details);
+      });
+
+      on('after:run', async (results) => {
+        await afterRunHook(results);
       });
     },
   },

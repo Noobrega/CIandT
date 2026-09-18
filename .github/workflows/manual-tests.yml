@@ -11,6 +11,7 @@ on:
         options:
           - all
           - '@api'
+          - '@ui'
           - '@auth'
           - '@positive'
           - '@negative'

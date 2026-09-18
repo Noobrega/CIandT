@@ -32,7 +32,7 @@ npm run test:frontend
 npm run test:api
 ```
 
-The API suite covers successful login, rejection of an incorrect password, and validation of a missing password. Each test creates its own user with a unique email and deletes that user afterward. Frontend scenarios have not been added yet, so `npm run test:frontend` will report that no spec files were found.
+The API suite covers successful login, rejection of an incorrect password, and validation of a missing password. Each test creates its own user with a unique email and deletes that user afterward. The frontend suite covers administrator login through the UI, using an independent user created and removed through the API.
 
 ## Configuration
 
@@ -49,11 +49,11 @@ Tests run with isolation enabled and automatic retries disabled. Failure screens
 
 ## Reports and GitHub Actions
 
-Before each headless run, the `before:run` hook removes the previous `reports/` directory once for the entire suite. Headless runs generate Mochawesome HTML and JSON reports in `reports/`, with one report per spec. Open the generated HTML file in a browser. Reports do not embed screenshots or videos; those files are stored separately.
+Before each headless run, the `before:run` hook removes the previous `reports/` directory once for the entire suite. Each run generates a single consolidated Mochawesome report at `reports/test-report.html`, plus its JSON source. The report groups results by suite, making API and UI tests distinguishable inside the same file. Reports do not embed screenshots or videos; those files are stored separately.
 
 The `Daily Cypress Tests` workflow runs the full suite in Chrome automatically every day at **06:00 America/Sao_Paulo (09:00 UTC)**. It has no manual trigger.
 
-For manual execution, open **Actions > Manual Cypress Tests > Run workflow** in GitHub and choose `all`, `@api`, `@auth`, `@positive`, or `@negative`. This separate workflow has no schedule. Both workflows use the artifact retention settings below.
+For manual execution, open **Actions > Manual Cypress Tests > Run workflow** in GitHub and choose `all`, `@api`, `@ui`, `@auth`, `@positive`, or `@negative`. This separate workflow has no schedule. Both workflows use the artifact retention settings below.
 
 Filter a local run by tag with `@cypress/grep`:
 

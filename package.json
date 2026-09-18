@@ -16,6 +16,6 @@
   "devDependencies": {
     "@cypress/grep": "7.0.0",
     "cypress": "16.1.0",
-    "mochawesome": "8.1.1"
+    "cypress-mochawesome-reporter": "5.0.0"
   }
 }
