@@ -45,7 +45,32 @@ npm run test:frontend -- --config baseUrl=https://front.serverest.dev
 npm run test:api -- --env apiUrl=https://serverest.dev
 ```
 
-Tests run with isolation enabled and automatic retries disabled. Failure screenshots are saved to `cypress/screenshots` during headless runs and are excluded from Git. Video recording is disabled.
+Tests run with isolation enabled and automatic retries disabled. Failure screenshots are saved to `cypress/screenshots` during headless runs and are excluded from Git. Videos are recorded in `cypress/videos`.
+
+## Reports and GitHub Actions
+
+Before each headless run, the `before:run` hook removes the previous `reports/` directory once for the entire suite. Headless runs generate Mochawesome HTML and JSON reports in `reports/`, with one report per spec. Open the generated HTML file in a browser. Reports do not embed screenshots or videos; those files are stored separately.
+
+The `Daily Cypress Tests` workflow runs the full suite in Chrome automatically every day at **06:00 America/Sao_Paulo (09:00 UTC)**. It has no manual trigger.
+
+For manual execution, open **Actions > Manual Cypress Tests > Run workflow** in GitHub and choose `all`, `@api`, `@auth`, `@positive`, or `@negative`. This separate workflow has no schedule. Both workflows use the artifact retention settings below.
+
+Filter a local run by tag with `@cypress/grep`:
+
+```bash
+npm run test:api -- --expose grepTags=@negative,grepOmitFiltered=true
+```
+
+Download artifacts from the workflow run's **Artifacts** section:
+
+| Artifact | Availability | Retention |
+| --- | --- | --- |
+| `test-reports` | Uploaded after passing or failing runs; includes generated HTML/JSON reports and the execution log | 30 days |
+| `failure-evidence` | Uploaded when the test step fails; includes available videos and failure screenshots | 7 days |
+
+The workflow preserves the failing test exit code, so failed tests mark the run as failed even when artifacts upload successfully. If Cypress cannot start, an HTML report or visual evidence may not exist; the execution log is still uploaded when the test step starts. Installation failures are available in the GitHub Actions step logs.
+
+The schedule becomes active after this workflow reaches the repository's default branch. GitHub may delay scheduled runs during busy periods; the cron time is not a guarantee of an exact start time.
 
 ## Troubleshooting
 

@@ -1,1 +1,3 @@
-// Register shared hooks and custom commands here when needed.
+import { register as registerCypressGrep } from '@cypress/grep';
+
+registerCypressGrep();

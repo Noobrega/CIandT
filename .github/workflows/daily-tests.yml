@@ -1,0 +1,56 @@
+name: Daily Cypress Tests
+
+on:
+  schedule:
+    # 06:00 America/Sao_Paulo (UTC-3).
+    - cron: '0 9 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cypress tests
+        id: tests
+        shell: bash
+        run: |
+          set -o pipefail
+          npm test -- --browser chrome 2>&1 | tee "$RUNNER_TEMP/cypress-execution.log"
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            reports/
+            ${{ runner.temp }}/cypress-execution.log
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload failure evidence
+        if: ${{ failure() && steps.tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-evidence
+          path: |
+            cypress/videos/
+            cypress/screenshots/
+          retention-days: 7
+          if-no-files-found: warn
