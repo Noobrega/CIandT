@@ -32,7 +32,7 @@ npm run test:frontend
 npm run test:api
 ```
 
-The API suite covers successful login and rejection of an incorrect password. Each test creates its own user with a unique email and deletes that user afterward. Frontend scenarios have not been added yet, so `npm run test:frontend` will report that no spec files were found.
+The API suite covers successful login, rejection of an incorrect password, and validation of a missing password. Each test creates its own user with a unique email and deletes that user afterward. Frontend scenarios have not been added yet, so `npm run test:frontend` will report that no spec files were found.
 
 ## Configuration
 

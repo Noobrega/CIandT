@@ -50,4 +50,13 @@ describe('API - Authentication', () => {
       expect(loginResponse.body).not.to.have.property('authorization');
     });
   });
+
+  it('should reject login without the required password', { tags: ['@api', '@auth', '@negative'] }, () => {
+    authService.login({ email: user.email }).then((loginResponse) => {
+      expect(loginResponse.status, 'validation error status').to.eq(400);
+      expect(loginResponse.body.password, 'required password error')
+        .to.eq('password é obrigatório');
+      expect(loginResponse.body).not.to.have.property('authorization');
+    });
+  });
 });
